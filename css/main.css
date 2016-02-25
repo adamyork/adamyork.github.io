@@ -1,0 +1,24 @@
+html,
+body {
+  width: 100%;
+  margin: 0;
+}
+
+body {
+  padding: 0;
+  background-color: white;
+}
+
+canvas {
+  margin:0;
+  padding: 0;
+  display: block;
+}
+
+span.title {
+  font-family: "Impact";
+  font-size: 8em;
+  padding: 0;
+  margin: 0;
+  display: none;
+}
