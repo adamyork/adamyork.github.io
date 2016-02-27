@@ -23,9 +23,9 @@
         var titles = $('span.title');
         var padding = titles.first().height();
         var textTopX = hCenter - (titles.first().width() / 2);
-        var textTopY = vCenter - (titles.first().height() / 2);
+        var textTopY = vCenter - (titles.first().height() / 4);
         var textBottomX = hCenter - (titles.last().width() / 2);
-        var textBottomY = vCenter - (titles.last().height() / 2) + padding;
+        var textBottomY = vCenter - (titles.last().height() / 4) + padding;
 
         context.fillStyle = generateColor();
         context.fillText('ADAM', textTopX, textTopY);

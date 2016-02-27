@@ -39,7 +39,7 @@
         $(document).mousemove(function(event) {
             this.mouseX = event.pageX;
             this.mouseY = event.pageY;
-        });
+        }.bind(this));
     }
 
     Physics.prototype.start = function() {
@@ -111,17 +111,18 @@
 
     Physics.prototype.checkCollisions = function(pixelA, destX, destY) {
         var pixelB = this.map['x' + destX + 'y' + destY];
+        var dx, dy, dist, threshX, threshY, angle, tx, ty, ax, ay;
         if (pixelB) {
-            var dx = destX - pixelA.x;
-            var dy = destY - pixelA.y;
-            var dist = Math.sqrt((dx * dx) + (dy * dy));
-            var threshX = 2;
-            var threshY = 2;
-            var angle = Math.atan2(dy, dx);
-            var tx = pixelA.x + Math.cos(angle) * threshX;
-            var ty = pixelA.y + Math.sin(angle) * threshY;
-            var ax = (tx - pixelB.x) * this.SPRING;
-            var ay = (ty - pixelB.y) * this.SPRING;
+            dx = destX - pixelA.x;
+            dy = destY - pixelA.y;
+            dist = Math.sqrt((dx * dx) + (dy * dy));
+            threshX = 2;
+            threshY = 2;
+            angle = Math.atan2(dy, dx);
+            tx = pixelA.x + Math.cos(angle) * threshX;
+            ty = pixelA.y + Math.sin(angle) * threshY;
+            ax = (tx - pixelB.x) * this.SPRING;
+            ay = (ty - pixelB.y) * this.SPRING;
             pixelA.vx -= ax;
             pixelA.vy -= ay;
             pixelB.vx += ax;
