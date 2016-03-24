@@ -8,39 +8,57 @@
 
 (function(scope) {
 
-    function Physics(canvas, context) {
+    function Physics(canvasText, canvasEffect, contextText, contextEffect) {
         this.GRAVITY = 0.3;
         this.SPRING = 0.06;
         this.FRICTION = 0.98;
+        this.SIZE = 10;
 
-        this.canvas = canvas;
-        this.context = context;
+        this.canvasText = canvasText;
+        this.canvasEffect = canvasEffect;
+        this.contextText = contextText;
+        this.contextEffect = contextEffect;
+        this.effectData = this.contextEffect.getImageData(0, 0, this.canvasEffect.width, this.canvasEffect.height);
         this.pixels = [];
         this.map = [];
-        this.imageData = context.getImageData(0, 0, canvas.width, canvas.height);
         this.frames = 0;
 
-        for (var i = 0; i < this.imageData.width; i++) {
-            var column = i;
-            for (var j = 0; j < this.imageData.height; j++) {
-                var row = j;
-                var r = this.imageData.data[((row * (this.imageData.width * 4)) + (column * 4)) + 0];
-                var g = this.imageData.data[((row * (this.imageData.width * 4)) + (column * 4)) + 1];
-                var b = this.imageData.data[((row * (this.imageData.width * 4)) + (column * 4)) + 2];
-                var a = this.imageData.data[((row * (this.imageData.width * 4)) + (column * 4)) + 3];
-                var pixel = new window.PhysicsPixel(column, row, 0, 0, 0, 0, column, row, r, g, b, a);
-                if (pixel.a !== 0) {
+        $(document).click(function(event) {
+            this.destroy(event.pageX, event.pageY);
+        }.bind(this));
+    }
+
+    Physics.prototype.imageDataToPixels = function() {
+
+    };
+
+    Physics.prototype.destroy = function(x, y) {
+        var colStart = x - (this.SIZE / 2);
+        var colEnd = x + (this.SIZE / 2);
+        var rowStart = y - (this.SIZE / 2);
+        var rowEnd = y + (this.SIZE / 2);
+
+        var targetData = this.contextText.getImageData(colStart, rowStart, this.SIZE, this.SIZE);
+
+        for (var i = 0; i < this.SIZE; i++) {
+            for (var j = 0; j < this.SIZE; j++) {
+                var a = targetData.data[((i * (this.SIZE * 4)) + (j * 4)) + 3];
+                if (a !== 0) {
+                    var pixelX = colStart + j;
+                    var pixelY = rowStart + i;
+                    var r = targetData.data[((i * (targetData.width * 4)) + (j * 4))];
+                    var g = targetData.data[((i * (targetData.width * 4)) + (j * 4)) + 1];
+                    var b = targetData.data[((i * (targetData.width * 4)) + (j * 4)) + 2];
+                    var pixel = new window.PhysicsPixel(pixelX, pixelY, r, g, b, a, i, j, this.SIZE);
+                    pixel.time = this.time;
                     this.pixels.push(pixel);
-                    this.map['x' + i + 'y' + j] = pixel;
+                    targetData.data[((i * (targetData.width * 4)) + (j * 4)) + 3] = 0;
+                    this.map['x' + pixelX + 'y' + pixelY] = pixel;
                 }
             }
         }
-
-        $(document).mousemove(function(event) {
-            this.mouseX = event.pageX;
-            this.mouseY = event.pageY;
-        }.bind(this));
-    }
+        this.contextText.putImageData(targetData, x - (this.SIZE / 2), y - (this.SIZE / 2));
+    };
 
     Physics.prototype.start = function() {
         this.render();
@@ -53,11 +71,11 @@
 
         this.time = now;
 
-        var imgData = this.imageData;
+        var imgData = this.effectData;
         var data = imgData.data;
 
         this.pixels.forEach(function(pixel, i) {
-            if (this.frames >= pixel.delay) {
+            if (this.time >= pixel.time + pixel.delay) {
 
                 var originalX = pixel.x;
                 var originalY = pixel.y;
@@ -69,8 +87,8 @@
                 pixel.y += Math.round(pixel.vy);
 
                 var leftBounds = 0;
-                var rightBounds = this.canvas.width;
-                var bottomBounds = this.canvas.height;
+                var rightBounds = this.canvasEffect.width;
+                var bottomBounds = this.canvasEffect.height;
                 var topBounds = 0;
 
                 var threshx = 1;
@@ -98,14 +116,13 @@
                 }
 
                 data[((originalY * (imgData.width * 4)) + (originalX * 4)) + 3] = 0;
-
-                data[((pixel.y * (imgData.width * 4)) + (pixel.x * 4)) + 0] = pixel.r;
-                data[((pixel.y * (imgData.width * 4)) + (pixel.x * 4)) + 1] = pixel.g;
-                data[((pixel.y * (imgData.width * 4)) + (pixel.x * 4)) + 2] = pixel.b;
-                data[((pixel.y * (imgData.width * 4)) + (pixel.x * 4)) + 3] = pixel.a;
             }
+            data[((pixel.y * (imgData.width * 4)) + (pixel.x * 4)) + 0] = pixel.r;
+            data[((pixel.y * (imgData.width * 4)) + (pixel.x * 4)) + 1] = pixel.g;
+            data[((pixel.y * (imgData.width * 4)) + (pixel.x * 4)) + 2] = pixel.b;
+            data[((pixel.y * (imgData.width * 4)) + (pixel.x * 4)) + 3] = pixel.a;
         }.bind(this));
-        this.context.putImageData(imgData, 0, 0);
+        this.contextEffect.putImageData(imgData, 0, 0);
         this.frames++;
     };
 

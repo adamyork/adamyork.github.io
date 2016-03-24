@@ -8,15 +8,19 @@
 
 (function(scope) {
 
-    var canvas;
-    var context;
+    var canvasText;
+    var canvasEffect;
+    var contextText;
+    var contextEffect;
     var engine;
 
     var init = function() {
-        canvas = document.getElementById('display');
-        context = canvas.getContext('2d');
+        canvasText = document.getElementById('text');
+        canvasEffect = document.getElementById('effect');
+        contextText = canvasText.getContext('2d');
+        contextEffect = canvasEffect.getContext('2d');
         resize();
-        context.font = '8em Impact';
+        contextText.font = '8em Impact';
 
         var hCenter = $(window).width() / 2;
         var vCenter = $(window).height() / 4;
@@ -27,17 +31,19 @@
         var textBottomX = hCenter - (titles.last().width() / 2);
         var textBottomY = vCenter - (titles.last().height() / 4) + padding;
 
-        context.fillStyle = generateColor();
-        context.fillText('ADAM', textTopX, textTopY);
-        context.fillStyle = generateColor();
-        context.fillText('YORK', textBottomX, textBottomY);
-        engine = new window.Physics(canvas, context);
+        contextText.fillStyle = generateColor();
+        contextText.fillText('ADAM', textTopX, textTopY);
+        contextText.fillStyle = generateColor();
+        contextText.fillText('YORK', textBottomX, textBottomY);
+        engine = new window.Physics(canvasText, canvasEffect, contextText, contextEffect);
         engine.start();
     };
 
     var resize = function() {
-        canvas.width = $(window).width();
-        canvas.height = $(window).height() / 2;
+        canvasText.width = $(window).width();
+        canvasText.height = $(window).height() / 2;
+        canvasEffect.width = $(window).width();
+        canvasEffect.height = $(window).height() / 2;
     };
 
     var generateColor = function(str) {
