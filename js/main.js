@@ -41,9 +41,9 @@
 
     var resize = function() {
         canvasText.width = $(window).width();
-        canvasText.height = $(window).height() / 2;
+        canvasText.height = 400;
         canvasEffect.width = $(window).width();
-        canvasEffect.height = $(window).height() / 2;
+        canvasEffect.height = 400;
     };
 
     var generateColor = function(str) {
