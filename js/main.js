@@ -14,45 +14,26 @@
     var contextEffect;
     var engine;
 
-    var init = function() {
+    let init = function() {
         canvasText = document.getElementById('text');
+        contextText = canvasText.getContext('2d'); 
         canvasEffect = document.getElementById('effect');
-        contextText = canvasText.getContext('2d');
         contextEffect = canvasEffect.getContext('2d');
         resize();
-        contextText.font = '8em Impact';
-
-        var hCenter = $(window).width() / 2;
-        var vCenter = $(window).height() / 4;
-        var titles = $('span.title');
-        var padding = titles.first().height();
-        var textTopX = hCenter - (titles.first().width() / 2);
-        var textTopY = vCenter - (titles.first().height() / 4);
-        var textBottomX = hCenter - (titles.last().width() / 2);
-        var textBottomY = vCenter - (titles.last().height() / 4) + padding;
-
-        contextText.fillStyle = generateColor();
-        contextText.fillText('ADAM', textTopX, textTopY);
-        contextText.fillStyle = generateColor();
-        contextText.fillText('YORK', textBottomX, textBottomY);
         engine = new window.Physics(canvasText, canvasEffect, contextText, contextEffect);
         engine.start();
     };
 
-    var resize = function() {
-        canvasText.width = $(window).width();
-        canvasText.height = 400;
+    let resize = function() {
         canvasEffect.width = $(window).width();
-        canvasEffect.height = 400;
-    };
-
-    var generateColor = function(str) {
-        var color = str || '#';
-        color += Number(Math.round(Math.random() * 255)).toString(16);
-        if (color.length < 7) {
-            return generateColor(color);
-        }
-        return color;
+        canvasEffect.height = $(window).height()/4;
+        canvasText.width = $(window).width();
+        canvasText.height = $(window).height()/4;
+        contextText.textAlign = 'center';
+        contextText.font = '8em Impact';
+        contextText.fillStyle = '#dfdde0';
+        contextText.fillText('BREAK THINGS', $(window).width()/2 ,$(window).height()/5);
+        $("#footer").css('top', canvasEffect.height);
     };
 
     $(document).ready(init);

@@ -100,19 +100,19 @@
                 if ((pixel.x + threshx) > rightBounds) {
                     destX = rightBounds - threshx;
                     pixel.vx *= pixel.bounce;
-                    this.checkCollisions(pixel, destX, pixel.y);
+                    //this.checkCollisions(pixel, destX, pixel.y);
                 } else if (pixel.x < leftBounds) {
                     destX = leftBounds;
                     pixel.vx *= pixel.bounce;
-                    this.checkCollisions(pixel, destX, pixel.y);
+                    //this.checkCollisions(pixel, destX, pixel.y);
                 } else if ((pixel.y + threshy) > bottomBounds) {
                     destY = bottomBounds - threshy;
                     pixel.vy *= pixel.bounce;
-                    this.checkCollisions(pixel, pixel.x, destY);
+                    //this.checkCollisions(pixel, pixel.x, destY);
                 } else if (pixel.y < topBounds) {
                     destY = topBounds;
                     pixel.vy *= pixel.bounce;
-                    this.checkCollisions(pixel, pixel.x, destY);
+                    //this.checkCollisions(pixel, pixel.x, destY);
                 }
 
                 data[((originalY * (imgData.width * 4)) + (originalX * 4)) + 3] = 0;
