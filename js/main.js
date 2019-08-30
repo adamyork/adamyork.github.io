@@ -36,7 +36,7 @@
     let determineFontSize = function(){
         var f = '30px Impact';
         if(window.screen.orientation === 'landscape-primary') {
-            fontSize = '60px Impact';
+            f = '60px Impact';
         }
         return f;
     }
