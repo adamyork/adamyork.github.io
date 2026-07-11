@@ -1,25 +1,25 @@
-<!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Adam York Development</title>
-    <link rel="stylesheet" href="css/main.css">
-    <script
-        src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-        integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
-        crossorigin="anonymous"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-  </head>
-  <body>
-    <div class="caption">Don't Be Scared to...</div>
-    <canvas id="text" width="400" height="150"></canvas>
-    <canvas id="effect"></canvas>
-    <div class="footer" id="footer">
-      <span>for more broken things checkout my <a href="https://github.com/adamyork">github</a></span>
-    </div>
-    <script src="js/physics.js"></script>
-    <script src="js/physics-pixel.js"></script>
-    <script src="js/main.js"></script>
-  </body>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <title>Sparrow Wasm</title>
+        <!--suppress HtmlUnknownTarget -->
+        <link href="main.css" rel="stylesheet"/>
+        <base href="/">
+    </head>
+    <body>
+        <div id="loading-screen" style="position:fixed; top:0; left:0; width:100%; height:100%; background:#000; color:#fff; display:flex; justify-content:center; align-items:center; z-index:9999;">
+            <h1>Loading Game...</h1>
+        </div>
+        <!--suppress HtmlUnknownTarget -->
+        <script src="sparrow-wasm.js"></script>
+        <noscript><strong>Please enable JavaScript to view this page correctly.</strong></noscript>
+        <div id="ComposeTarget"></div>
+        <audio id="background-audio" loop="loop"></audio>
+        <audio id="jump-audio"></audio>
+        <audio id="collision-audio"></audio>
+        <audio id="collect-audio"></audio>
+        <audio id="shoot-audio"></audio>
+    </body>
 </html>
