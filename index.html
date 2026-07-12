@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <title>Sparrow Wasm</title>
+        <!--suppress HtmlUnknownTarget -->
+        <link href="main.css" rel="stylesheet"/>
+    </head>
+    <body>
+        <div id="loading-screen" style="position:fixed; top:0; left:0; width:100%; height:100%; background:#000; color:#fff; display:flex; justify-content:center; align-items:center; z-index:9999;">
+            <h1>Loading Game...</h1>
+        </div>
+        <!--suppress HtmlUnknownTarget -->
+        <script src="sparrow-wasm.js"></script>
+        <noscript><strong>Please enable JavaScript to view this page correctly.</strong></noscript>
+        <div id="ComposeTarget"></div>
+        <audio id="background-audio" loop="loop"></audio>
+        <audio id="jump-audio"></audio>
+        <audio id="collision-audio"></audio>
+        <audio id="collect-audio"></audio>
+        <audio id="shoot-audio"></audio>
+    </body>
+</html>
